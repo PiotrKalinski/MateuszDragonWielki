@@ -1,0 +1,2 @@
+Result: 15.0
+Above should be result from performing ruby script
