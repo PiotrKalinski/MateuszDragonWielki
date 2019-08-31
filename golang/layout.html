@@ -1,0 +1,11 @@
+{{if .Success}}
+    <h1>Thanks for your message!</h1>
+    
+{{else}}
+    <h1>Contact</h1>
+    <form method="POST" id="form1" >
+        First name: <textarea rows="2" cols="20" name="input" wrap="hard"></textarea><br>
+      </form>
+      
+      <button type="submit" form="form1" value="Submit">Submit</button>
+{{end}}
