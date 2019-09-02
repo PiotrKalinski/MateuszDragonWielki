@@ -1,12 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	"net/url"
+	"strings"
 	"time"
 )
 
@@ -18,8 +19,6 @@ type AlgorithmOutput struct {
 	result   int
 	duration time.Duration
 }
-
-var count = 12
 
 func main() {
 	template := template.Must(template.ParseFiles("layout.html"))
@@ -35,9 +34,7 @@ func main() {
 			Arguments: r.FormValue("input"),
 		}
 
-		fmt.Println(details.Arguments)
-
-		log.Println(executeAlgorithm(details).duration.Seconds())
+		executeAlgorithm(details)
 
 		template.Execute(w, struct{ Success bool }{true})
 	})
@@ -49,21 +46,31 @@ func executeAlgorithm(args AlgorithmArguments) AlgorithmOutput {
 
 	start := time.Now()
 
-	formData := url.Values{
-		"args": {args.Arguments},
+	arguments := strings.Split(args.Arguments, "/n")
+
+	for _, argument := range arguments {
+
+		fmt.Println(argument)
+		url := "http://127.0.0.1:5000/rpn"
+
+		requestBody, err := json.Marshal(map[string]string{
+			"expression": argument,
+		})
+
+		if err != nil {
+			fmt.Print(err)
+		}
+
+		req, _ := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
+
+		res, _ := http.DefaultClient.Do(req)
+		var result map[string]interface{}
+
+		defer res.Body.Close()
+
+		json.NewDecoder(res.Body).Decode(&result)
+		log.Println(result["result"])
 	}
-	log.Println(formData)
-
-	resp, err := http.PostForm("https://d7fd62b6-895d-42cd-93fe-bb793d6c67b5.mock.pstmn.io/dupa", formData)
-
-	if err != nil {
-		log.Fatalln("d", err)
-	}
-	// do something with details
-	var result map[string]interface{}
-
-	json.NewDecoder(resp.Body).Decode(&result)
-	log.Println(result["chuj"])
 
 	elapsed := time.Since(start)
 
