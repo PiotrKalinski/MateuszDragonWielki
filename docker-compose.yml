@@ -1,0 +1,14 @@
+version: "2"
+services:
+  golang:
+    build: ./
+    depends_on:
+      - rpn_proxy
+    command: "go run main.go"
+    ports:
+      - "8080:8080"
+  rpn_proxy:
+    build: ./
+    command: "python ./app.py"
+    ports:
+      - "5000:5000"
