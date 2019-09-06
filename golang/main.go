@@ -39,7 +39,7 @@ func main() {
 		template.Execute(w, struct{ Success bool }{true})
 	})
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":4000", nil)
 }
 
 func executeAlgorithm(args AlgorithmArguments) AlgorithmOutput {
@@ -50,16 +50,16 @@ func executeAlgorithm(args AlgorithmArguments) AlgorithmOutput {
 
 	for _, argument := range arguments {
 
-		fmt.Println(argument)
 		url := "http://127.0.0.1:5000/rpn"
 
 		requestBody, err := json.Marshal(map[string]string{
-			"expression": argument,
+			"expression": argument[1:],
 		})
 
 		if err != nil {
 			fmt.Print(err)
 		}
+		fmt.Println(bytes.NewBuffer(requestBody))
 
 		req, _ := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
 
