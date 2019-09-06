@@ -1,21 +1,15 @@
 version: "3.1"
 services:
-  golang:
-    build: ./golang
-    depends_on:
-      - rpn_proxy
-    command: "go run main.go"
-    ports:
-      - "4000:4000"
-    links:
-      - "rpn_proxy"
-    networks:
-      my-network:
+  # golang:
+  #   build: ./golang
+  #   command: "go run main.go"
+  #   ports:
+  #     - "8080:8000"
+
 
   rpn_proxy:
     build: ./rpn_proxy
-    command: "python ./app.py"
-    container_name: flask
+    command: flask run --host=0.0.0.0
     networks:
       my-network:
         aliases:
@@ -27,8 +21,6 @@ services:
     image: nginx:1.13.7
     ports:
       - 80:80
-    depends_on:
-      - rpn_proxy
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
 

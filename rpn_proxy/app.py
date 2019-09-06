@@ -9,7 +9,7 @@ def reverse_polish_notation():
     expression = calculate_expression()
 
     response = app.response_class(
-        response= json.dumps(jsonify("dsds":{[{'processed': k, 'expression': v} for k,v in expression.items()], indent=4})),
+        response= json.dumps([{'processed': k, 'expression': v} for k,v in expression.items()], indent=4),
         status=200,
         mimetype='application/json'
     )
@@ -19,4 +19,4 @@ def reverse_polish_notation():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0')

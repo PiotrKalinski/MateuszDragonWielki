@@ -22,7 +22,7 @@ type AlgorithmOutput struct {
 
 func main() {
 	template := template.Must(template.ParseFiles("layout.html"))
-
+	fmt.Print("adad")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		if r.Method != http.MethodPost {
