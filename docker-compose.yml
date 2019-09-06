@@ -7,9 +7,10 @@ services:
   #     - "8080:8000"
 
 
-  rpn_proxy:
+  flask:
     build: ./rpn_proxy
     command: flask run --host=0.0.0.0
+    container_name: flask
     networks:
       my-network:
         aliases:
