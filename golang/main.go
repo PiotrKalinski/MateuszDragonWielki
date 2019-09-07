@@ -32,7 +32,7 @@ type ResponseData struct {
 
 func main() {
 	template := template.Must(template.ParseFiles("layout.html"))
-	fmt.Print("adad")
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 		if r.Method != http.MethodPost {
@@ -47,7 +47,10 @@ func main() {
 		dad := executeAlgorithm(details)
 		fmt.Println(dad)
 
-		template.Execute(w, struct{ Success bool }{true})
+		template.Execute(w, struct {
+			Success  bool
+			Response []ResponseData
+		}{true, dad})
 	})
 
 	http.ListenAndServe(":4000", nil)

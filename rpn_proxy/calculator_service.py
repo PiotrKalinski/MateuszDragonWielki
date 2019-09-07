@@ -20,7 +20,7 @@ def calculate_expression():
             break
         start = time.time()
         cmd = "ruby -r \"./calculator.rb\" -e \"RPNParser.parse '{0}'\"".format(single_expression)
-        end = time.time() - start
+        end = float(time.time() - start)
         p = Popen(cmd, shell=True, stdout=PIPE)
         output, errors = p.communicate()
         request_data = output.decode("utf-8").rstrip('\n')

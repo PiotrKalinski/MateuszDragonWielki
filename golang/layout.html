@@ -1,6 +1,9 @@
 {{if .Success}}
     <h1>Thanks for your message!</h1>
     
+    {{range .Response}}
+    time: {{ .Time}} data: {{ .Data}} expression: {{ .Expression}} <br>
+    {{end}}
 {{else}}
     <h1>Contact</h1>
     <form method="POST" id="form1" >
