@@ -16,11 +16,9 @@ When I started this project, I got to figure out how to split functionalities an
 
 Before you start a tour with this project, be sure that you have installed:
 
-* Docker
-
-Verify that you have successfully installed docker by typing in terminal:
-
-`docker run hello-world`
+* Golang
+* Python, Flask
+* Ruby
 
 Solution is mostly oriented for Linux-related users.  
 
@@ -30,15 +28,13 @@ Solution is mostly oriented for Linux-related users.
 
     /cd/to/your/path
 
-2. This project uses three containers
+2. Go to /golang directory and type:
 
-* nginx - reverse proxy to allow communication between containers
-* rpn_proxy - python-flask based api with ruby script to run Reverse Polish Notation algorithm script
-* golang - interface and simple web interface
+    go run main.go
+3. Go to /rpn_proxy directory and type: 
 
-3. When you are in the main directory of project, write:
+    python ./app.py
 
-    docker-compose up
 
 ## Functionalities
 
@@ -56,11 +52,11 @@ Body
 
 ## Issues, important notes
 
-In terms of showing processed expression, I had to think about how to split technologies between three parts. Flask server suited well for small project as this one, Ruby for calculating expression and Golang as procedural language suited well for interfaces with typed structs.
+In terms of showing processed expression, I had to think about how to split technologies between three parts. Flask server suited well for small project as this one, Ruby for calculating expression and Golang as procedural language suited well for interfaces with typed struts.
 
 If I had a possibility to change, or improve something I'd rather:
 
 * Rewrite python logging.
 * Perhaps split calculation class to separate logging method.
-* There is surely a place for tool that creates some cool documentation like Swagger - if I had a bigger experience with it I'd definitely used it.
+* There was a try to close implementation in docker, but I had a problem with network. Golang app couldn't connect to flask api server.
 * If I had any earlier experience with Python I would definitely try to make tests.
