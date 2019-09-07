@@ -4,7 +4,9 @@ services:
     build: ./golang
     command: "go run main.go"
     ports:
-      - "4000:8000"
+      - "4000:4000"
+    networks:
+      - my-network
 
 
   flask:

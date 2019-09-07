@@ -7,11 +7,17 @@ from flask import request
 
 
 def calculate_expression():
-    request_data = request.data.decode("utf-8")
+    request_data = request.data
     expressions = json.loads(request_data)['expression']
 
     results = []
-    for single_expression in expressions.replace("\r", "").split("\n"):
+    count = 0
+    for idx, single_expression in enumerate(expressions.replace("\r", "").split("\n")):
+        if idx == 0:
+            count = int(single_expression)
+            continue
+        if idx > count:
+            break
         start = time.time()
         cmd = "ruby -r \"./calculator.rb\" -e \"RPNParser.parse '{0}'\"".format(single_expression)
         end = time.time() - start

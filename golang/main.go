@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"log"
+	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
@@ -15,9 +15,19 @@ type AlgorithmArguments struct {
 	Arguments string
 }
 
+type Count struct {
+	count string
+}
+
 type AlgorithmOutput struct {
 	result   int
 	duration time.Duration
+}
+
+type ResponseData struct {
+	Data       string
+	Expression string
+	Time       float64
 }
 
 func main() {
@@ -34,7 +44,8 @@ func main() {
 			Arguments: r.FormValue("input"),
 		}
 
-		executeAlgorithm(details)
+		dad := executeAlgorithm(details)
+		fmt.Println(dad)
 
 		template.Execute(w, struct{ Success bool }{true})
 	})
@@ -42,41 +53,38 @@ func main() {
 	http.ListenAndServe(":4000", nil)
 }
 
-func executeAlgorithm(args AlgorithmArguments) AlgorithmOutput {
-
-	start := time.Now()
+func executeAlgorithm(args AlgorithmArguments) []ResponseData {
 
 	arguments := strings.Split(args.Arguments, "/n")
 
+	var response []ResponseData
+
 	for _, argument := range arguments {
 
-		url := "http://127.0.0.1:5000/rpn"
+		url := "http://127.0.0.1:5000/rpn/"
 
 		requestBody, err := json.Marshal(map[string]string{
-			"expression": argument[1:],
+			"expression": argument,
 		})
 
 		if err != nil {
 			fmt.Print(err)
 		}
-		fmt.Println(bytes.NewBuffer(requestBody))
 
 		req, _ := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
 
 		res, _ := http.DefaultClient.Do(req)
-		var result map[string]interface{}
+		jsonDataFromHTTP, err := ioutil.ReadAll(res.Body)
 
-		defer res.Body.Close()
+		var jsonData []ResponseData
 
-		json.NewDecoder(res.Body).Decode(&result)
-		log.Println(result["result"])
+		err = json.Unmarshal([]byte(jsonDataFromHTTP), &jsonData) // here!
+
+		if err != nil {
+			panic(err)
+		}
+		response = jsonData
 	}
 
-	elapsed := time.Since(start)
-
-	records := AlgorithmOutput{
-		result:   12,
-		duration: elapsed,
-	}
-	return records
+	return response
 }
