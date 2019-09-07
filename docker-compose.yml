@@ -18,7 +18,7 @@ services:
         aliases:
           - flask-app
     ports:
-        - 8080:5000
+        - 5000:5000
 
   nginx:
     image: nginx:1.13.7
@@ -32,3 +32,4 @@ services:
         
 networks:
   my-network:
+    driver: bridge

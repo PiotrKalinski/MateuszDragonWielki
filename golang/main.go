@@ -64,7 +64,7 @@ func executeAlgorithm(args AlgorithmArguments) []ResponseData {
 
 	for _, argument := range arguments {
 
-		url := "http://127.0.0.1:5000/rpn/"
+		url := "http://localhost:5000/rpn/"
 
 		requestBody, err := json.Marshal(map[string]string{
 			"expression": argument,
