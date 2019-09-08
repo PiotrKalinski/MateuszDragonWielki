@@ -31,10 +31,14 @@ Solution is mostly oriented for Linux-related users.
 2. Go to /golang directory and type:
 
     go run main.go
-3. Go to /rpn_proxy directory and type: 
+
+3. Go to /rpn_proxy directory and type:
 
     python ./app.py
 
+4. Type in browser
+
+    http://localhost:4000/
 
 ## Functionalities
 
