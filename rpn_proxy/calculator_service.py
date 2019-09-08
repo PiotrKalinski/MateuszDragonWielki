@@ -29,8 +29,7 @@ def calculate_expression():
     response = json.dumps(results, indent=4)
 
     with open('logs/test-{0}.txt'.format(datetime.now()), 'w') as fw:
-        print(response)
-         
+       
         fw.write(response)
 
     return response
