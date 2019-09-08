@@ -1,3 +1,5 @@
 rpn_proxy/venv
 rpn_proxy/logs
+rpn_proxy/calculator_service.pyc
+rpn_proxy/ExpiressionResult.pyc
 rpn_proxy/__pycache__
