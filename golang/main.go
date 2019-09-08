@@ -81,7 +81,7 @@ func executeAlgorithm(args AlgorithmArguments) []ResponseData {
 
 		var jsonData []ResponseData
 
-		err = json.Unmarshal([]byte(jsonDataFromHTTP), &jsonData) // here!
+		err = json.Unmarshal([]byte(jsonDataFromHTTP), &jsonData)
 
 		if err != nil {
 			panic(err)
